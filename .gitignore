@@ -1,8 +1,7 @@
 env
 .vscode
 .DS_Store
-**.mov
-**.fig
-**.gif
-**.png
 fonts
+dist
+**/*.egg-info
+**/__pycache__

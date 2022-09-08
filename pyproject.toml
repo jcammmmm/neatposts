@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "webdocs-jcammmmm"
+version = "1.0.0"
+authors = [
+  { name="Juan Camilo Florez", email="jcflorezv@unal.edu.co" },
+]
+description = "a md document prettifier"
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/jcammmmm/multiform-cvt"
+"Bug Tracker" = "https://github.com/jcammmmm/multiform-cv/issues"
