@@ -1,66 +1,51 @@
-import sys
-import markdown as md
-import datetime as time
-import os
-from jinja2 import Environment, PackageLoader
-from fnmatch import fnmatch
-from importlib.resources import path
-from shutil import copytree
-from re import search, escape
+import argparse
+
+from .fontsmngr import copy_fonts_and_ignore
+from .indexgen import generate_index
+from .converter import to_html
+from .filltempl import fill_content
 
 def main():
+  parser = argparse.ArgumentParser(
+    description="""
+      Generate a neat web document from a Markdown file. By that, you have
+      both of the two worlds: a simple text file, and also a neat displayed html page
+      without to get messed with tags.
+    """)
+  parser.add_argument('filename', help='markdown filename without extension')
+  parser.add_argument('-i', action='store_true', 
+    help="""
+      flag that indicates that a toc-index web page will be generated provided
+      the index.yaml post resources definition file. This package will look
+      automatically for this file in the folder where the package was called.
+    """)
+  parser.add_argument('-p', action='store_true', 
+    help="""
+      flag that indicates that fonts location are in a remote server. If not HTTP
+      remote location is defined with argument -l, this remote location defaults
+      to: https://jcamilo.co/fonts/cmuserif/
+    """)
+  parser.add_argument('-l', metavar='fontloc',
+    help="""
+      an HTTP url that points to the computer modern fonts location.
+    """)
+  args = parser.parse_args()
+
+
+  fonts_loc = 'fonts/cmuserif/'
+  if (args.p):
+    fonts_loc = 'https://jcamilo.co/fonts/cmuserif/'
+  if (args.l):
+    fonts_loc = args.l
+
   copy_fonts_and_ignore()
-  if len(sys.argv) < 2:
-    raise Exception('Please provide the markdown file name.')
+  if (args.i):
+    html_content = generate_index()
+  else:
+    html_content = to_html(args.filename)
 
-  FILENAME = sys.argv[1]
-  FONTS_LOC = 'http://jcamilo.co/fonts/cmuserif/'
-  FONTS_LOC = 'fonts/cmuserif/'
+  fill_content(args.filename, fonts_loc, html_content)
 
-  env = Environment(
-    loader=PackageLoader('neatdocs', package_path='.', encoding='UTF-8'),
-    autoescape=False
-  )
-
-  with open(FILENAME + '.md', 'r', encoding='UTF-8') as input_file:
-    text = input_file.read()
-
-  '''
-  attr_list: for inline attribute definitions
-  toc      : table of contents
-  tables   : generates html tables
-  '''
-  html = md.markdown(text, extensions=['attr_list', 'toc', 'tables'], output_format='html5', tab_length=2)
-  print(html)
-
-  css = env.get_template('layout.css').render(urlprefix=FONTS_LOC)
-  post = env.get_template('layout.html').render(content=html, styles=css)
-  open(FILENAME + '.html', 'w+', encoding='UTF-8').write(post)
-  open(FILENAME + '.html', 'a').write('last updated: ' + str(time.datetime.now()))
-
-def copy_fonts_and_ignore():
-  # check if fonts folder exists
-  copy = True
-  for file in os.listdir(os.getcwd()):
-    if fnmatch(file, 'fonts'):
-      copy = False
-
-  # copy fonts
-  if copy:
-    fonts_src_path = str(path('neatdocs.fonts.cmuserif', ''))
-    fonts_des_path = os.path.join(os.getcwd(), 'fonts', 'cmuserif')
-    copytree(fonts_src_path, fonts_des_path)
-
-  # edit .gitignore
-  append = True
-  with open('.gitignore', 'r', encoding='UTF-8') as ignrfile:
-    for line in ignrfile:
-      if search(escape(line), 'fonts'):
-        append = False
-        break
-  with open('.gitignore', 'a', encoding='UTF-8') as ignrfile:
-    if append:
-      ignrfile.write('\nfonts')
-  
 if __name__ == '__main__':
   main()
+  print('OK')

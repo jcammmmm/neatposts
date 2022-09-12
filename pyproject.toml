@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "webdocs-jcammmmm"
-version = "1.0.0"
+name = "neatdocs"
+version = "1.2.0"
 authors = [
   { name="Juan Camilo Florez", email="jcflorezv@unal.edu.co" },
 ]
