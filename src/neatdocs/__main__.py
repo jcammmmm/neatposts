@@ -44,8 +44,8 @@ def main():
   else:
     html_content = to_html(args.filename)
 
+  print(html_content)
   fill_content(args.filename, fonts_loc, html_content)
 
 if __name__ == '__main__':
   main()
-  print('OK')

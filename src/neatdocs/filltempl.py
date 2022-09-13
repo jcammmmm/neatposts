@@ -9,7 +9,10 @@ def fill_content(filename, fonts_loc, html_content):
 
   css = env.get_template('layout.css').render(urlprefix=fonts_loc)
   post = env.get_template('layout.html').render(content=html_content, styles=css)
-  open(filename + '.html', 'w+', encoding='UTF-8').write(post)
 
-  open(filename + '.html', 'a').write('Generated with NeatPosts. </br>')
-  open(filename + '.html', 'a').write('Last updated: ' + str(time.datetime.now()))
+  filename = filename + '.html'
+  open(filename, 'w+', encoding='UTF-8').write(post)
+
+  open(filename, 'a').write('Generated with NeatPosts. </br>')
+  open(filename, 'a').write('Last updated: ' + str(time.datetime.now()))
+  print(filename + ' written.')
