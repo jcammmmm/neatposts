@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "neatdocs"
+name = "neatposts"
 version = "1.2.0"
 authors = [
   { name="Juan Camilo Florez", email="jcflorezv@unal.edu.co" },

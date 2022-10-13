@@ -2,7 +2,7 @@
 This python module will transform your markdown documents that contains mathematics into html. Its design
 has in mind to be minimalistic and aestetically academic.
 
-MD format was choose since one wants to focus on document text content a not in the tags.
+MD format was chose since one wants to focus on document text content a not in the tags.
 
 It relies in the following awesome software tools:
 - [MathJax](http://docs.mathjax.org/en/latest/) LaTeX to MathML processor.
@@ -14,10 +14,10 @@ It relies in the following awesome software tools:
 # How to run #
 ## Correctly ##
 
-  1. cd webdocs
+  1. cd neatposts
   2. pip install --editable .
   3. cd your/post/location
-  4. python3 -m webdoc <md_filename_no_extension>
+  4. python3 -m neatposts <md_filename_no_extension>
 
 ## Legacy
 
