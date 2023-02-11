@@ -9,13 +9,14 @@ def to_html(filename):
     return
 
   '''
-  attr_list: for inline attribute definitions
-  toc      : table of contents
-  tables   : generates html tables
+  attr_list  : for inline attribute definitions
+  toc        : table of contents
+  tables     : generates html tables
+  fenced_code: display codeblocks (https://python-markdown.github.io/extensions/fenced_code_blocks/)
   '''
   html = md.markdown(
     text, 
-    extensions=['attr_list', 'toc', 'tables'], 
+    extensions=['attr_list', 'toc', 'tables', 'fenced_code'], 
     output_format='html5', 
     tab_length=2)
   return html
